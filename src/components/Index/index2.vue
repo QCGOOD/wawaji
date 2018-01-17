@@ -152,11 +152,7 @@
 		},
 
 		mounted() {
-			// this.main = document.getElementById('main-box')
-			// this.main.addEventListener('scroll', () => {
-			// 	this.setScroll()
-			// 	this.tabFixed()
-			// })
+
 			window.addEventListener('scroll', () => {
 				setTimeout(() => {
 					this.setScroll()
@@ -165,7 +161,7 @@
 			})
 			this.tabs = document.getElementById('tabs')
 			this.header = document.getElementById('header')
-			// console.log('header === ', header.offsetHeight)
+
 			this.height = window.innerHeight
 			this.hdWidth = window.innerWidth * 4
       window.onresize = () => {
@@ -173,25 +169,32 @@
 				this.hdWidth = window.innerWidth * 4
 			}
 
-			let share = localStorage.getItem('share')
+			let share = this.getItem('share')
 			if (share) {
 				this.isInvitingFriends = true
 				// this.$refs.inviting.create()
 			}
       this.from()
-      this.getChannelsType()
+      // this.getChannelsType()
 			// this.channels()
 
-			let start = Number(localStorage.getItem('start'))
+			let start = Number(this.getItem('start'))
 			if (start) this.search.start = start
+
+			let total = Number(this.getItem('total'))
+			if (total) this.total = total
+
+			let channelsTypeList = JSON.parse(this.getItem('channelsTypeList'))
+			if (channelsTypeList && channelsTypeList.length > 1) {
+				this.channelsTypeList = channelsTypeList
+				this.lsChannelsType()
+			} else {
+				this.getChannelsType()
+			}
 		},
 		beforeDestroy() {
+			this.local()
 			localStorage.removeItem('share')
-			// alert(this.channelsTypeList[this.swiperIndex].name)
-			localStorage.setItem('channelsType', JSON.stringify(this.channelsTypeList[this.swiperIndex]))
-			localStorage.setItem('scrollTop', this.scrollTop)
-			if (this.newsList.length > 0) localStorage.setItem('newsList', JSON.stringify(this.newsList))
-			if (this.search.start !== 0) localStorage.setItem('start', this.search.start)
 		},
 		computed: {
 			...mapState({
@@ -216,6 +219,20 @@
 			...mapActions([
 				'updateMember', 'updateSum'
 			]),
+			setItem (string, value) {
+				localStorage.setItem(string, value)
+			},
+			getItem (string) {
+				return localStorage.getItem(string)
+			},
+			local () {
+				this.setItem('channelsType', JSON.stringify(this.channelsTypeList[this.swiperIndex]))
+				this.setItem('scrollTop', this.scrollTop)
+				if (this.newsList.length > 0) this.setItem('newsList', JSON.stringify(this.newsList))
+				if (this.channelsTypeList.length > 0) this.setItem('channelsTypeList', JSON.stringify(this.channelsTypeList))
+				if (this.search.start !== 0) this.setItem('start', this.search.start)
+				if (this.total !== 0) this.setItem('total', this.total)
+			},
 			tabFixed () {
 				if (this.tabs.offsetTop <= (document.documentElement.scrollTop||document.body.scrollTop) + this.header.offsetHeight) {
 					this.fixedTab = true
@@ -243,12 +260,12 @@
 
 			// 每日礼包
 			from () {
-				let dailySignInSuccess = localStorage.getItem('dailySignInSuccess')
+				let dailySignInSuccess = this.getItem('dailySignInSuccess')
 				if (!dailySignInSuccess) {
 					let from = this.util.getUrlParam('from')
 					if (from === 'dailySignInSuccess') {
 						this.coinNum = Number(this.util.getUrlParam('coinNum'))
-						localStorage.setItem('dailySignInSuccess', true)
+						this.setItem('dailySignInSuccess', true)
 						if (this.util.getUrlParam('hasDailyCoin') === 'true') {
 							this.hasDailyCoin = true
 						} else {
@@ -307,6 +324,39 @@
 					// console.log(res.data)
 				})
 			},
+
+			// 缓存的频道分类
+			lsChannelsType () {
+				this.tabWidth = window.innerWidth / this.channelsTypeList.length
+				let channelsType = JSON.parse(this.getItem('channelsType'))
+				if (channelsType) {
+					this.channelsTypeList.map((item, index) => {
+						if (item.id === channelsType.id) {
+							this.tabActive = index
+							this.swiperIndex = index
+							this.translateWidth = this.tabWidth * index
+						}
+					})
+
+					let newsList = JSON.parse(this.getItem('newsList'))
+					if (newsList.length > 0) {
+						newsList.map(item => {
+							this.newsList.push(item)
+						})
+					}
+
+					this.isScrollTop = true
+					let scrollTop = Number(this.getItem('scrollTop'))
+					if (this.isScrollTop && scrollTop !== 0) {
+						setTimeout(() => {
+							document.documentElement.scrollTop = scrollTop
+							document.body.scrollTop = scrollTop
+						}, 100)
+					}
+					this.isScrollTop = false
+				}
+			},
+
 			// 频道分类
 			getChannelsType () {
 				api.getChannelsType(1).then(res => {
@@ -316,39 +366,41 @@
 						res.data.list.map(item => {
 							this.channelsTypeList.push(item)
 						})
+
 						this.tabWidth = window.innerWidth / this.channelsTypeList.length
+						this.channels()
 
-						let channelsType = JSON.parse(localStorage.getItem('channelsType'))
-						if (channelsType) {
-							
-							this.channelsTypeList.map((item, index) => {
-								if (item.id === channelsType.id) {
-									// this.clickActive(index, item)
-									this.tabActive = index
-									this.swiperIndex = index
-									this.translateWidth = this.tabWidth * index
-								}
-							})
-							let newsList = JSON.parse(localStorage.getItem('newsList'))
-							console.log('newsList === ', newsList)
-							if (newsList.length > 0) {
-								newsList.map(item => {
-									this.newsList.push(item)
-								})
-							}
+						// let channelsType = JSON.parse(this.getItem('channelsType'))
+						// if (channelsType) {
+						// 	this.channelsTypeList.map((item, index) => {
+						// 		if (item.id === channelsType.id) {
+						// 			// this.clickActive(index, item)
+						// 			this.tabActive = index
+						// 			this.swiperIndex = index
+						// 			this.translateWidth = this.tabWidth * index
+						// 		}
+						// 	})
 
-							this.isScrollTop = true
-							let scrollTop = Number(localStorage.getItem('scrollTop'))
-							if (this.isScrollTop && scrollTop !== 0) {
-								setTimeout(() => {
-									document.documentElement.scrollTop = scrollTop
-									document.body.scrollTop = scrollTop
-								}, 100)
-							}
-							this.isScrollTop = false
-						} else {
-							this.channels()
-						}
+						// 	let newsList = JSON.parse(this.getItem('newsList'))
+						// 	console.log('newsList === ', newsList)
+						// 	if (newsList.length > 0) {
+						// 		newsList.map(item => {
+						// 			this.newsList.push(item)
+						// 		})
+						// 	}
+
+						// 	this.isScrollTop = true
+						// 	let scrollTop = Number(this.getItem('scrollTop'))
+						// 	if (this.isScrollTop && scrollTop !== 0) {
+						// 		setTimeout(() => {
+						// 			document.documentElement.scrollTop = scrollTop
+						// 			document.body.scrollTop = scrollTop
+						// 		}, 100)
+						// 	}
+						// 	this.isScrollTop = false
+						// } else {
+						// 	this.channels()
+						// }
 					}
 				})
 			},
@@ -378,15 +430,7 @@
 						this.sw = true
 		
 						this.search.start = this.search.start + this.search.limit
-
-						// let scrollTop = Number(localStorage.getItem('scrollTop'))
-						// if (this.isScrollTop && scrollTop !== 0) {
-						// 	setTimeout(() => {
-						// 		document.documentElement.scrollTop = scrollTop
-						// 		document.body.scrollTop = scrollTop
-						// 	}, 100)
-						// }
-						this.isScrollTop = false
+						// this.isScrollTop = false
 					}
 				})
 			},
