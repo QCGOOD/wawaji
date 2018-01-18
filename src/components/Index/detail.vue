@@ -324,12 +324,14 @@
 				confirmTocancelStatus: true,
 				isPay: false,
 				isCreateGrabDoll: 0,
+				soundConfig: {},
 			}
 		},
 		created () {
 			this.IsPC()
 			bugout.clear()
-			this.getGameAudioConfig()
+			// this.getGameAudioConfig()
+			this.getSoundConfig()
 		},
 		mounted () { 
 			let detail = document.getElementById('operation')
@@ -474,19 +476,7 @@
 			this.loading(false)
 
 			document.addEventListener('visibilitychange', function(event) {
-				// document.title = document.hidden ? '用户离开了' : '用户回来了'
-				// if (document.hidden) {
-				// 	console.log('用户离开了')
-				// 	if (this.useLocalStreamList.length > 0) {
-				// 		zg.stopPlayingStream(this.useLocalStreamList[1].stream_id)
-				// 		zg.stopPlayingStream(this.useLocalStreamList[0].stream_id)
-				// 	}
-				// } else {
-				// 	console.log('用户回来了')
-				// 	zg.startPlayingStream(useStreamList[m].stream_id, useStreamList[m].videoView)
-				// }
 			});
-
 		},
 		// 组件销毁，退出时执行
 		beforeDestroy() {
@@ -516,11 +506,6 @@
 					}
 					return state.member
 				},
-				soundConfig: function (state) {
-					let soundConfig = JSON.parse(window.localStorage.getItem('soundConfig'))
-					this.$store.commit('updateSoundConfig', {soundConfig: soundConfig})
-					return state.soundConfig
-				},
 				againStatus: function (state) {
 					let againStatus = window.localStorage.getItem('againStatus')
 					this.$store.commit('updateAgainStatus', {againStatus: againStatus})
@@ -532,6 +517,19 @@
 			...mapActions([
 				'updateMember', 'updateSum', 'updateAgainStatus'
 			]),
+
+			getSoundConfig () {
+				api.soundConfig().then(res => {
+					console.log('getSoundConfig')
+					console.log(res.data)
+					if (res.data.errCode === 0) {
+						this.soundConfig = res.data.data
+						this.getGameAudioConfig()
+					} else {
+						// alert(JSON.stringify(res.data))
+					}
+				})
+			},
 
 			// 获取游戏音效
 			getGameAudioConfig () {

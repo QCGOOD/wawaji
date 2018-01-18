@@ -3,9 +3,6 @@
     <div class="doll-detail">
       <div class="list">
         <div class="content">
-          <!-- <img src="/static/images/chenggong.png" alt="">
-          <img src="/static/images/chenggong.png" alt="">
-          <img src="/static/images/chenggong.png" alt=""> -->
           <p style="font-size: 1.6rem;" v-if="content" v-html="content"></p>
           <p style="font-size: 1.6rem;" v-else>暂无介绍</p>
         </div>

@@ -91,7 +91,8 @@ export default {
           this.coinsSum();
           this.wxSdk.share(res.data.member.id, res.data.member.nickname)
         }else{
-          this.showInfo(res.data.errMsg)
+          // this.showInfo(res.data.errMsg)
+          // alert(JSON.stringify(res.data))
         }
       })
     },
@@ -100,7 +101,8 @@ export default {
         if (res.data.errCode === 0) {
           this.updateSum(res.data.sum)
         } else {
-          console.log(res.data.errMsg);
+          // console.log(res.data.errMsg);
+          // alert(JSON.stringify(res.data))
         }
       })
     },
@@ -113,6 +115,8 @@ export default {
           delete model.id
           this.updateSoundConfig(model)
           console.log(model)
+        } else {
+          // alert(JSON.stringify(res.data))
         }
       })
     },

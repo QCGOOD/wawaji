@@ -1,5 +1,5 @@
 <template>
-  <div class="novice-guidance"  v-show="show" @click="know">
+  <div class="novice-guidance"  v-show="show" @click.stop="know">
     <div class="first ng-box" id="ng-box" :style="{width: `${width}px`, height: `${height}px`}" v-show="popupBox" >
       <div class="ng-title">
         <div class="close-box"></div>
@@ -13,7 +13,7 @@
           <p>快来抓娃娃吧 (*≧m≦*)</p>
         </div>
         <img class="dengdao" src="http://wawa-1255600302.file.myqcloud.com/images/dengdao.png" alt="">
-        <div class="context-button" @click="know(0)">我知道了</div>
+        <div class="context-button" @click.stop="know(0)">我知道了</div>
       </div>
 
       <div class="second-box" v-else>
@@ -24,8 +24,8 @@
           <p>对这款娃娃不感兴趣？您可以查看游戏指引，或者去大厅看看，会有更多惊喜哦~</p>
         </div>
         <div class="second-btn">
-          <p @click="close">开始抓娃娃</p>
-          <p @click="getIndex">找娃娃去</p>
+          <p @click.stop="close">开始抓娃娃</p>
+          <p @click.stop="getIndex">找娃娃去</p>
         </div>
         <div class="bottom-text">
           不知道怎么玩？看<span>游戏指引</span>
@@ -112,9 +112,6 @@
       getIndex () {
         this.$router.replace('/index')
       },
-      know2 () {
-        alert(2)
-      },
 
       know (val) {
         // alert(val)
@@ -144,6 +141,7 @@
             this.liveBox = true
             this.knowIndex = 1
           } else if (this.knowIndex === 1) {
+            console.log(11111111)
             this.liveBox = false
             this.operationBox = true
             this.knowIndex = 2
@@ -180,7 +178,7 @@
       }
     }
     .ng-box {
-      background: rgba(255, 255, 255, .4);
+      background: rgba(255, 255, 255, .5);
       position: absolute;
       border-radius: 15px;
       top: 50%;

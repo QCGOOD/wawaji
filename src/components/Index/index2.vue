@@ -11,9 +11,9 @@
         </p>
       </router-link>
       <div class="function">
-				<!-- <router-link tag="i" class="img" :to="{path: '/myInfo/Preferential'}">
+				<router-link tag="i" class="img" :to="{path: '/myInfo/Preferential'}">
           <img class="lihe" src="http://wawa-1255600302.file.myqcloud.com/images/lihe.png" alt="">
-        </router-link> -->
+        </router-link>
         <router-link tag="i" class="img" :to="{path: '/myInfo/recharge'}">
           <img src="http://wawa-1255600302.file.myqcloud.com/images/pay1.png" alt="">
         </router-link>
@@ -24,8 +24,6 @@
     </div>
 
 		<div class="main-box" id="main-box">
-		<!-- <div class="main-box" id="main-box" :style="{height: `${height}px`}"> -->
-			<!-- <div style="height: 45px;"></div> -->
 			<swipers moduleName="News" :type="false"></swipers>
 			<div class="function-button">
 				<div class="button-item" v-for="(item, i) in functionButtons" :key="i" @click="show(item, i)">
@@ -43,32 +41,16 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- <div v-if="newsList.length > 0"> -->
-				<!-- <div v-for="i in 40" :key="i" style="height: 5rem; width: 100%;">
-					<p>fsadofjoasjfosd</p>
-				</div> -->
 				<div class="listImg">
 					<div class="graphic" v-for="(item, i) in newsList" :key="i" @click="to(item.id)">
 						<graphic :item="item"></graphic>
 					</div>
 				</div>
-				<!-- <div v-if="newsList.length > 0">
-					<divider v-if="shows" style="color: rgb(125, 113, 113); font-size: 1.4rem;">我是有底线的</divider>
-					<p style="text-align:center;" v-else>
-						<inline-loading></inline-loading><span style="vertical-align:middle;display:inline-block;font-size:14px;">&nbsp;&nbsp;数据加载中</span>
-					</p>
-				</div>
-				<divider v-else style="color: rgb(125, 113, 113); font-size: 1.4rem; padding-top: 15px;">暂无数据</divider> -->
+
 				<divider v-if="shows" style="color: rgb(125, 113, 113); font-size: 1.4rem;">我是有底线的</divider>
 				<p style="text-align:center; padding: 10px 0;" v-else>
 					<inline-loading></inline-loading><span style="vertical-align:middle;display:inline-block;font-size:14px;">&nbsp;&nbsp;数据加载中</span>
 				</p>
-				<!-- <p style="text-align:center; padding: 10px 0;">
-					<inline-loading></inline-loading><span style="vertical-align:middle;display:inline-block;font-size:14px;">&nbsp;&nbsp;数据加载中</span>
-				</p> -->
-			<!-- </div>
-			<divider v-else style="color: rgb(125, 113, 113); font-size: 1.4rem; padding-top: 15px;">暂无数据</divider> -->
 		</div>
 
 		<login-bonus :visibile="isLoginBonus" @close="getMasks"></login-bonus>
@@ -141,7 +123,8 @@
 				main: null,
 				hdWidth: 0,
 				swiperIndex: 0,
-				channelsTypeList: [{name: '全部', id: ''}],
+				// channelsTypeList: [{name: '全部', id: ''}],
+				channelsTypeList: [],
 				id: null,
 				header: null,
 				tabs: null,
@@ -152,7 +135,6 @@
 		},
 
 		mounted() {
-
 			window.addEventListener('scroll', () => {
 				setTimeout(() => {
 					this.setScroll()
@@ -175,8 +157,6 @@
 				// this.$refs.inviting.create()
 			}
       this.from()
-      // this.getChannelsType()
-			// this.channels()
 
 			let start = Number(this.getItem('start'))
 			if (start) this.search.start = start
@@ -219,12 +199,15 @@
 			...mapActions([
 				'updateMember', 'updateSum'
 			]),
+			
 			setItem (string, value) {
 				localStorage.setItem(string, value)
 			},
+
 			getItem (string) {
 				return localStorage.getItem(string)
 			},
+
 			local () {
 				this.setItem('channelsType', JSON.stringify(this.channelsTypeList[this.swiperIndex]))
 				this.setItem('scrollTop', this.scrollTop)
@@ -233,6 +216,7 @@
 				if (this.search.start !== 0) this.setItem('start', this.search.start)
 				if (this.total !== 0) this.setItem('total', this.total)
 			},
+
 			tabFixed () {
 				if (this.tabs.offsetTop <= (document.documentElement.scrollTop||document.body.scrollTop) + this.header.offsetHeight) {
 					this.fixedTab = true
@@ -240,6 +224,7 @@
 					this.fixedTab = false
 				}
 			},
+
 			clickActive (index, item) {
 				this.tabActive = index
 				this.swiperIndex = index
@@ -247,12 +232,11 @@
 				console.log(item)
 				this.channels(item.id)
 			},
-			swiperChange (index) {
-				this.clickActive(index + 1)
-			},
+
 			closeReceive () {
 				this.isReceive = !this.isReceive
 			},
+
 			to (id) {
 				this.loading(true, '加载中')
 				this.$router.push(`/index/detail/${id}`)
@@ -315,14 +299,9 @@
 						break
 				}
 			},
+
 			showInviting (val) {
 				this.isInvitingMask = val
-			},
-			coinsConfig () {
-				api.coinsConfig().then(res => {
-					// console.log('coinsConfig')
-					// console.log(res.data)
-				})
 			},
 
 			// 缓存的频道分类
@@ -368,42 +347,11 @@
 						})
 
 						this.tabWidth = window.innerWidth / this.channelsTypeList.length
-						this.channels()
-
-						// let channelsType = JSON.parse(this.getItem('channelsType'))
-						// if (channelsType) {
-						// 	this.channelsTypeList.map((item, index) => {
-						// 		if (item.id === channelsType.id) {
-						// 			// this.clickActive(index, item)
-						// 			this.tabActive = index
-						// 			this.swiperIndex = index
-						// 			this.translateWidth = this.tabWidth * index
-						// 		}
-						// 	})
-
-						// 	let newsList = JSON.parse(this.getItem('newsList'))
-						// 	console.log('newsList === ', newsList)
-						// 	if (newsList.length > 0) {
-						// 		newsList.map(item => {
-						// 			this.newsList.push(item)
-						// 		})
-						// 	}
-
-						// 	this.isScrollTop = true
-						// 	let scrollTop = Number(this.getItem('scrollTop'))
-						// 	if (this.isScrollTop && scrollTop !== 0) {
-						// 		setTimeout(() => {
-						// 			document.documentElement.scrollTop = scrollTop
-						// 			document.body.scrollTop = scrollTop
-						// 		}, 100)
-						// 	}
-						// 	this.isScrollTop = false
-						// } else {
-						// 	this.channels()
-						// }
+						this.channels(this.channelsTypeList[0].id)
 					}
 				})
 			},
+
 			// 获取娃娃机列表
       channels (id) {
 				if (id && this.id === id)	return
@@ -434,6 +382,7 @@
 					}
 				})
 			},
+
       setScroll () {
 				this.scrollTop = document.documentElement.scrollTop||document.body.scrollTop
 				// console.log(this.scrollTop)
@@ -534,9 +483,6 @@
 						2.5% {
 							transform: rotateZ(25deg);
 						}
-						// 5% {
-						// 	transform: rotateZ(0deg);
-						// }
 						7.5% {
 							transform: rotateZ(-25deg);
 						}
@@ -564,11 +510,6 @@
 			background-size: 100%;
 			overflow-y: scroll;
 			padding-top: 5rem;
-			// position: fixed;
-			// left: 0;
-			// right: 0;
-			// bottom: 0;
-			// top: 5rem;
 			.function-button {
 				display: flex;
 				background: #fff;
@@ -592,11 +533,9 @@
 				position: relative;
 				background: #fff;
 				height: 44px;
-		
 				.tabs_wrap {
 					height: 44px;
 					position: absolute;
-					// top: 0;
 					left: 0;
 					right: 0;
 					overflow: hidden;
@@ -637,7 +576,7 @@
 							z-index: 5;
 							flex: 1;
 							cursor: pointer;
-							padding: 0 5px;
+							// padding: 0 5px;
 							height: 44px;
 							font-size: 1.4rem;
 							position: relative;
@@ -645,8 +584,8 @@
 							line-height: 44px;
 							text-align: center;
 							box-sizing: border-box;
-							// background-color: #fff;
 							min-width: 0;
+							white-space: nowrap;
 							&:active {
 								background-color: #e8e8e8;
 							}

@@ -1,29 +1,37 @@
 <template>
-  <div class="preferential" :style="{height: `${height}px`}">
-    <div class="th-box">
-      <div class="th-title">
-        <img class="th-img" src="http://wawa-1255600302.file.myqcloud.com/images/th-tx.png" alt="">
-        <!-- <p class="text-title">充值大特惠，娃娃抓不停</p> -->
+  <div style="position: relative;">
+    <div class="preferential" :style="{height: `${height}px`}">
+      <div class="th-box">
+        <div class="th-title">
+          <img class="th-img" src="http://wawa-1255600302.file.myqcloud.com/images/th-tx.png" alt="">
+          <!-- <p class="text-title">充值大特惠，娃娃抓不停</p> -->
+        </div>
+        <div class="th-context">
+          <preferential-item v-for="(item, i) in bagsList" :key="i" :item="item" @ordersBags="ordersBags" @show="show"></preferential-item>
+        </div>
       </div>
-      <div class="th-context">
-        <preferential-item v-for="(item, i) in bagsList" :key="i" :item="item" @ordersBags="ordersBags"></preferential-item>
-      </div>
+
+      <bag :visibile="visibile" :description="description" @close="close"></bag>
     </div>
+    
   </div>
 </template>
 
 <script>
   import api from '../../api/api'
   import PreferentialItem from '../Common/PreferentialItem'
+  import Bag from './Bag'
 
   export default {
     components: {
-      PreferentialItem
+      PreferentialItem, Bag
     },
     data () {
       return {
         height: 0,
         bagsList: [],
+        visibile: false,
+        description: '',
       }
     },
     created () {
@@ -53,6 +61,14 @@
             window.location.href = `https://pay.swiftpass.cn/pay/jspay?token_id=${tokenId}`
           }
         })
+      },
+      show (description) {
+        this.description = description
+        this.visibile = true
+        console.log(description)
+      },
+      close () {
+        this.visibile = false
       }
     }
   }
