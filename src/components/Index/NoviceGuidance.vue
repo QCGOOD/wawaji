@@ -28,7 +28,7 @@
           <p @click.stop="getIndex">找娃娃去</p>
         </div>
         <div class="bottom-text">
-          不知道怎么玩？看<span>游戏指引</span>
+          不知道怎么玩？看<span @click.stop="get">游戏指引</span>
         </div>
       </div>
 
@@ -108,7 +108,10 @@
           }
         }
         // this.$emit('close', true) 
-			},
+      },
+      get () {
+        window.location.href = 'http://mp.weixin.qq.com/s/rEV9658Pa5x_RelU_U4J4Q'
+      },
       close () {
         console.log('close')
         this.$emit('close', false, true)

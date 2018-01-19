@@ -10,8 +10,8 @@ let urlsk = {
 
 	// 接口完整前缀
 	baseURL: function () {
-		// return `http://wawa.bfb88.net/${this.code}/`
-		return `http://wawa.bfb88.net/${this.code}_test/`
+		return `http://wawa.bfb88.net/${this.code}/`
+		// return `http://wawa.bfb88.net/${this.code}_test/`
 		// return `http://wfx.wego168.com/${this.code}/`
 		// return `http://192.168.1.70:8180/${this.code}/`
 		// return `http://192.168.1.90:8180/${this.code}/`

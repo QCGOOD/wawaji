@@ -8,13 +8,8 @@
         <img src="http://wawa-1255600302.file.myqcloud.com/images/yq.png" alt="">
       </div>
       <div class="mask" id="maskBox">
-        <div class="inviting-none">
-          <div class="none-text">
-            <p>各位玩友，邀请好友即可得金币哦（好友进入游戏后，抓取一次娃娃即算邀请成功），分享多多，金币多多哦~</p>
-          </div>
-          <p class="none-btn" @click="showInvting">我要分享</p>
-        </div>
-        <div class="inviting-text">
+        
+        <div class="inviting-text" v-if="share.length > 0">
           <div class="title">
             <p class="you-btn" @click="showInvting">邀请好友</p>
           </div>
@@ -47,6 +42,12 @@
             <p>*好友进入游戏后，抓取一次娃娃即算邀请成功;</p>
             <!-- <p>*每晚12点重置进度，别忘记领奖啊~</p> -->
           </div>
+        </div>
+        <div class="inviting-none" v-else>
+          <div class="none-text">
+            <p>各位玩友，邀请好友即可得金币哦（好友进入游戏后，抓取一次娃娃即算邀请成功），分享多多，金币多多哦~</p>
+          </div>
+          <p class="none-btn" @click="showInvting">我要分享</p>
         </div>
       </div>
       <div class="inviting-mask">
@@ -238,7 +239,6 @@
           justify-content: center;
           align-items: center;
           flex-flow: column;
-          display: none;
           .none-text {
             padding: 0 4rem;
             font-size: 1.7rem;

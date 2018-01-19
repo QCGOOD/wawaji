@@ -12,9 +12,9 @@
         </p>
       </router-link>
       <div class="function">
-				<router-link tag="i" class="img" :to="{path: '/myInfo/Preferential'}">
+				<!-- <router-link tag="i" class="img" :to="{path: '/myInfo/Preferential'}">
           <img class="lihe" src="http://wawa-1255600302.file.myqcloud.com/images/lihe.png" alt="">
-        </router-link>
+        </router-link> -->
         <router-link tag="i" class="img" :to="{path: '/myInfo/recharge'}">
           <img src="http://wawa-1255600302.file.myqcloud.com/images/pay1.png" alt="">
         </router-link>
@@ -39,7 +39,7 @@
 					<img :src="`http://wawa-1255600302.file.myqcloud.com/images/btn_1.png`" alt="">
 					<span>每日礼包</span>
 				</div>
-				<div class="button-item" @click="show(1)" v-if="enabled">
+				<div class="button-item" @click="show(1)" v-if="false">
 					<img :src="`http://wawa-1255600302.file.myqcloud.com/images/btn_2.png`" alt="">
 					<span>邀请有礼</span>
 				</div>
@@ -282,6 +282,10 @@
 					case 2:
 						this.isHidden = true
 						this.isLoginBonus = true
+						break
+					case 3:
+						// this.$router.push('/News')
+						window.location.href = 'http://mp.weixin.qq.com/s/rEV9658Pa5x_RelU_U4J4Q'
 						break
 				}
 			},
