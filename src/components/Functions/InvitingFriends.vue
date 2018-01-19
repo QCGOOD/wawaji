@@ -8,35 +8,35 @@
         <img src="http://wawa-1255600302.file.myqcloud.com/images/yq.png" alt="">
       </div>
       <div class="mask" id="maskBox">
+        <div class="inviting-none">
+          <div class="none-text">
+            <p>各位玩友，邀请好友即可得金币哦（好友进入游戏后，抓取一次娃娃即算邀请成功），分享多多，金币多多哦~</p>
+          </div>
+          <p class="none-btn" @click="showInvting">我要分享</p>
+        </div>
         <div class="inviting-text">
           <div class="title">
-            <div class="left">
-              <h3>分享领金币啦！</h3>
-              <p>分享成功即可领取金币！</p>
-            </div>
-            <div class="right">
-              <p @click="showInvting">分享</p>
-              <!-- <p>可领取: 0/3</p> -->
-            </div>
+            <p class="you-btn" @click="showInvting">邀请好友</p>
           </div>
           <div class="context">
             <div class="item" v-for="(item, i) in share" :key="i">
               <div class="item-l">
                 <div class="item-img">
-                  <img src="http://wawa-1255600302.file.myqcloud.com/images/gold.png" alt="">
+                  <img :src="item.headImage" alt="">
+                  <!-- <img src="http://wawa-1255600302.file.myqcloud.com/images/headImg.jpg" alt=""> -->
                 </div>
                 <div class="info">
-                  <p>邀请到{{item.number}}位好友</p>
-                  <p>奖励：金币x{{item.gold}}</p>
+                  <p>成功邀请到{{item.nickname}}</p>
+                  <p>奖励：金币x{{item.coinNum}}</p>
                 </div>
               </div>
               <div class="item-r">
-                <p class="r-count">当前：
+                <!-- <p class="r-count">当前：
                   <span v-if="item.number > 0">{{invitationNum}}</span>
                   <span v-else>{{item.number}}</span>
                   /
                   <span>{{item.number}}</span>
-                </p>
+                </p> -->
                 <p class="receive" v-if="item.status === 0" @click="showInvting">邀请</p>
                 <p class="receive have-receive" v-else-if="item.status === 1" @click="receive(item)">领取</p>
                 <i class="iconfont icon-dui" v-else-if="item.status === 2"></i>
@@ -45,7 +45,7 @@
           </div>
           <div class="shouming">
             <p>*好友进入游戏后，抓取一次娃娃即算邀请成功;</p>
-            <p>*每晚12点重置进度，别忘记领奖啊~</p>
+            <!-- <p>*每晚12点重置进度，别忘记领奖啊~</p> -->
           </div>
         </div>
       </div>
@@ -86,7 +86,8 @@
       },
     },
     mounted () {
-      this.shareInvitationReward()
+      // this.shareInvitationReward()
+      this.shareInvitationRewardSelect()
     },
     methods: {
       ...mapActions([
@@ -136,29 +137,25 @@
       },
       shareInvitationRewardSelect () {
         api.shareInvitationRewardSelect().then(res => {
-          console.log('shareInvitationRewardSelect')
-          console.log(res.data)
-          // console.log(JSON.parse(res.data))
           if (res.data.errCode === 0) {
             console.log('shareInvitationRewardSelect')
             console.log(res.data)
             this.invitationNum = res.data.result.invitationNum
-            let result = {}
-            if (res.data.result.invitations) {
-              result = res.data.result.invitations
-              for (let key in result) {
-                this.share.map(item => {
-                  if (item.number === Number(key)) {
-                    item.id = result[key].id
-                    item.status = result[key].status
-                  }
-                })
-              }
-              console.log(this.share)
-            }
-            // this.show = this.visibile
+            // let result = {}
+            // if (res.data.result.invitations) {
+            //   result = res.data.result.invitations
+            //   for (let key in result) {
+            //     this.share.map(item => {
+            //       if (item.number === Number(key)) {
+            //         item.id = result[key].id
+            //         item.status = result[key].status
+            //       }
+            //     })
+            //   }
+            //   console.log(this.share)
+            // }
+            this.share = res.data.result.invitations
           } else {
-            // alert(11)
             this.showInfo(res.data.errMsg)
           }
         })
@@ -168,8 +165,8 @@
         api.obtainInvitationCoin({id: item.id}).then(res => {
           console.log(res.data)
           if (res.data.errCode === 0) {
-            this.updateSum(this.sum + item.gold)
-            this.showInfo(`领取${item.gold}金币成功`)
+            this.updateSum(this.sum + item.coinNum)
+            this.showInfo(`领取${item.coinNum}金币成功`)
             item.status = 2
           }
         })
@@ -233,6 +230,33 @@
         border-radius: 10px;
         padding: 1rem;
         box-sizing: border-box;
+        .inviting-none {
+          font-size: 1.6rem;
+          background: #fff;
+          height: 34rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-flow: column;
+          display: none;
+          .none-text {
+            padding: 0 4rem;
+            font-size: 1.7rem;
+          }
+          .none-btn {
+            margin-top: 3rem;
+            .bgLinearGradient(@top: #fe2d87; @bottom: #f22065;);
+            width: 14rem;
+            height: 4rem;
+            line-height: 4rem;
+            text-align: center;
+            color: #fff;
+            font-size: 1.8rem;
+            border-radius: 40px;
+            border: 1px solid #ff3e94;
+            .boxShadowOutset(@x: 0px; @y: 2px; @blur: 0px; @spread: 0px; @color: #790029;);
+          }
+        }
         .inviting-text {
           text-align: center;
           background: #fff;
@@ -241,14 +265,26 @@
           position: relative;
           padding: 3.5rem 1.5rem 0 1.5rem;
           .title {
-            background: #f6a0b5;
+            // background: #f6a0b5;
             border-radius: 5px;
             color: #fff;
             margin-bottom: 1rem;
             padding: .5rem 1rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            .you-btn {
+              .bgLinearGradient(@top: #fe2d87; @bottom: #f22065;);
+              width: 14rem;
+              height: 4rem;
+              line-height: 4rem;
+              text-align: center;
+              color: #fff;
+              font-size: 1.8rem;
+              border-radius: 40px;
+              border: 1px solid #ff3e94;
+              .boxShadowOutset(@x: 0px; @y: 2px; @blur: 0px; @spread: 0px; @color: #790029;);
+            }
             .left {
               text-align: left;
               h3 {
@@ -293,21 +329,21 @@
               padding: .7rem;
               background: #ffeff3;
               border-radius: 5px;
-              border: 1px solid #eae2c7;
+              border: 1px solid #f7c5d1;
               box-sizing: border-box;
               justify-content: space-between;
-              height: 5rem;
               &:not(:first-child) {
                 margin-top: 5px;
               }
               .item-l {
                 display: inline-flex;
+                align-items: center;
                 .item-img {
-                  width: 3rem;
-                  height: 3rem;
+                  width: 4rem;
+                  height: 4rem;
                   line-height: 1;
                   overflow: hidden;
-                  margin-right: 10px;
+                  margin-right: 15px;
                   flex-shrink: 0;
                   img {
                     width: 100%;
@@ -318,13 +354,13 @@
                   p {
                     line-height: 1;
                     &:first-child {
-                      font-size: 1.4rem;
+                      font-size: 1.5rem;
                       font-weight: bold;
                       color: #333333;
-                      margin-bottom: 5px;
+                      margin-bottom: 6px;
                     }
                     &:last-child {
-                      font-size: 1.2rem;
+                      font-size: 1.4rem;
                       color: #b0b0b0;
                     }
                   }
@@ -337,15 +373,16 @@
                 }
                 .receive {
                   .bgLinearGradient(@top: #32cddf; @bottom: #0d90a6;);
-                  padding: .3rem .3rem;
                   .borderRadius(30px);
-                  font-size: 1.3rem;
-                  line-height: 1;
                   color: #fff;
-                  // width: 60px;
+                  font-size: 1.3rem;
+                  
+                  width: 6rem;  
+                  height: 2.2rem;
+                  line-height: 2.2rem;
                   text-align: center;
                   border: 1px solid #2cc4d7;
-                  box-sizing: border-box;
+                  // box-sizing: border-box;
                   .boxShadowOutset(@x: 0; @y: 2px; @blur: 0px; @spread: 0px; @color: #006766);
                 }
                 .have-receive {
@@ -364,7 +401,7 @@
           }
           .shouming {
             color: #999999;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             padding: 1rem 0 1rem 0;
             text-align: left;
           }

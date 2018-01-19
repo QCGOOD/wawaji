@@ -75,13 +75,14 @@
 
 <style lang="less">
   .preferential {
-    background: #3f2175;
+    background: url(http://wawa-1255600302.file.myqcloud.com/images/bg2.png);
+		background-size: 100%;
     overflow: scroll;
     position: relative;
     .th-box {
-      background: #912fa7;
+      background: #ffffff;
       width: 90%;
-      border-radius: 12px;
+      border-radius: 6px;
       position: absolute;
       top: 7rem;
       left: 50%;
@@ -97,7 +98,7 @@
         }
       }
       .th-context {
-        padding: 2rem 2rem 0rem 2rem;
+        padding: 4rem 2rem 0rem 2rem;
         min-height: 10rem;
       }
     }

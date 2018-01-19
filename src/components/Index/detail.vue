@@ -1168,11 +1168,12 @@
 				this.config = ''
 				this.payTimestamp = parseInt(new Date().getTime()/1000)
 				let params = {
-					session_id: this.sessionID,
+					
 					confirm: 1,
 					time_stamp: this.payTimestamp,
 					custom_token: '',
 					game_time: 30,
+					session_id: this.sessionID,
 				}
 				api.clawConfig(this.$route.params.id, params).then(res => {
 					if (res.data.errCode === 0) {

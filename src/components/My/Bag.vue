@@ -29,9 +29,9 @@
       }
     },
     mounted () {
-      this.width = window.innerWidth - 40
+      this.width = window.innerWidth - 30
       window.onresize = () => {
-        this.width = window.innerWidth - 40
+        this.width = window.innerWidth - 30
       }
     },
     methods: {
@@ -44,7 +44,7 @@
 
 <style lang="less">
   .bagdia {
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .8);
     position: absolute;
     top: 0;
     z-index: 1;
@@ -52,7 +52,7 @@
     left: 0;
     right: 0;
     .bag-box {
-      background: #49287f;
+      background: #ffffff;
       position: absolute;
       border-radius: 15px;
       top: 50%;
@@ -65,7 +65,7 @@
         top: -1px;
         right: 4px;
         font-size: 28px;
-        color: #b6a9cc;
+        color: #ffa8c3;
       }
       .lbsm {
         width: 35%;
@@ -78,7 +78,7 @@
         overflow: scroll;
         height: 50rem;
         font-size: 1.6rem;
-        color: #fff;
+        // color: #fff;
         padding: 1rem;
         box-sizing: border-box;
       }

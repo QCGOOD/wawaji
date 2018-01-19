@@ -66,8 +66,8 @@ export default {
       console.log('1121')
     },
     login () {
-      // 13844836024 13000000002 vpwTDu_L1HfS8rSIg oR2NewlLlG-vpwTDu_L1HfS8rSIg oR2Newv9oDJ59RFhgXiWDknSVXyA
-      let model = { mode: 'test', mobile: 'oR2Newv9oDJ59RFhgXiWDknSVXyA', type: 2, needUserInfo: false }
+      //  oA-FB0iDijc0xljb91kqz0DO5v8o oR2Newv9oDJ59RFhgXiWDknSVXyA
+      let model = { mode: 'test', mobile: '15220036344', type: 2, needUserInfo: false }
       api.login(model).then(res => {
         if (res.data.errCode === 0) {
           console.log('test登录成功')

@@ -1,5 +1,6 @@
 <template>
 	<div class="main" id="main" :class="{'hidden': isHidden}">
+		<!-- 头部 -->
 		<div class="header" id="header">
       <router-link tag="div" class="user-info" :to="{path: '/user'}">
         <img v-if="userInfo.headImage" :src="userInfo.headImage" alt="">
@@ -11,9 +12,9 @@
         </p>
       </router-link>
       <div class="function">
-				<!-- <router-link tag="i" class="img" :to="{path: '/myInfo/Preferential'}">
+				<router-link tag="i" class="img" :to="{path: '/myInfo/Preferential'}">
           <img class="lihe" src="http://wawa-1255600302.file.myqcloud.com/images/lihe.png" alt="">
-        </router-link> -->
+        </router-link>
         <router-link tag="i" class="img" :to="{path: '/myInfo/recharge'}">
           <img src="http://wawa-1255600302.file.myqcloud.com/images/pay1.png" alt="">
         </router-link>
@@ -23,14 +24,35 @@
       </div>
     </div>
 
+		
 		<div class="main-box" id="main-box">
+			<!-- 轮播图 -->
 			<swipers moduleName="News" :type="false"></swipers>
+			<!-- 按钮 -->
 			<div class="function-button">
-				<div class="button-item" v-for="(item, i) in functionButtons" :key="i" @click="show(item, i)">
+				<!-- <div class="button-item" v-for="(item, i) in functionButtons" :key="i" @click="show(item, i)">
 					<img :src="`http://wawa-1255600302.file.myqcloud.com/images/${item.imgName}.png`" alt="">
 					<span>{{item.title}}</span>
+				</div> -->
+
+				<div class="button-item" @click="show(0)">
+					<img :src="`http://wawa-1255600302.file.myqcloud.com/images/btn_1.png`" alt="">
+					<span>每日礼包</span>
+				</div>
+				<div class="button-item" @click="show(1)" v-if="enabled">
+					<img :src="`http://wawa-1255600302.file.myqcloud.com/images/btn_2.png`" alt="">
+					<span>邀请有礼</span>
+				</div>
+				<div class="button-item" @click="show(2)">
+					<img :src="`http://wawa-1255600302.file.myqcloud.com/images/btn_3.png`" alt="">
+					<span>新手福利</span>
+				</div>
+				<div class="button-item" @click="show(3)">
+					<img :src="`http://wawa-1255600302.file.myqcloud.com/images/btn_4.png`" alt="">
+					<span>游戏指引</span>
 				</div>
 			</div>
+			<!-- 分类 -->
 			<div class="tabs" id="tabs">
 				<div class="tabs_wrap" id="tabs_wrap" :class="{'fixed': fixedTab}">
 					<div class="tabs_nav">
@@ -41,16 +63,16 @@
 					</div>
 				</div>
 			</div>
-				<div class="listImg">
-					<div class="graphic" v-for="(item, i) in newsList" :key="i" @click="to(item.id)">
-						<graphic :item="item"></graphic>
-					</div>
+			<!-- 频道列表 -->
+			<div class="listImg">
+				<div class="graphic" v-for="(item, i) in newsList" :key="i" @click="to(item.id)">
+					<graphic :item="item"></graphic>
 				</div>
-
-				<divider v-if="shows" style="color: rgb(125, 113, 113); font-size: 1.4rem;">我是有底线的</divider>
-				<p style="text-align:center; padding: 10px 0;" v-else>
-					<inline-loading></inline-loading><span style="vertical-align:middle;display:inline-block;font-size:14px;">&nbsp;&nbsp;数据加载中</span>
-				</p>
+			</div>
+			<divider v-if="shows" style="color: rgb(125, 113, 113); font-size: 1.4rem;">我是有底线的</divider>
+			<p style="text-align:center; padding: 10px 0;" v-else>
+				<inline-loading></inline-loading><span style="vertical-align:middle;display:inline-block;font-size:14px;">&nbsp;&nbsp;数据加载中</span>
+			</p>
 		</div>
 
 		<login-bonus :visibile="isLoginBonus" @close="getMasks"></login-bonus>
@@ -63,7 +85,7 @@
 
 <script>
 	import api from '../../api/api'
-	import { Group, Scroller, LoadMore, Divider, Sticky, InlineLoading, Swiper, SwiperItem } from 'vux'
+	import { Divider, InlineLoading } from 'vux'
 	import Graphic from '../Common/Graphic'
 	import { mapState, mapActions } from 'vuex'
 	import Swipers from '../Common/Swiper'
@@ -75,31 +97,18 @@
 
 	export default {
 		components: {
-			Group, Graphic, Scroller, LoadMore, Divider, Sticky, Swipers, Swiper, SwiperItem, LoginBonus, DailyGiftBag, InvitingFriends, InvitingMask, Receive, InlineLoading
+			Graphic, Divider, Swipers, LoginBonus, DailyGiftBag, InvitingFriends, InvitingMask, Receive, InlineLoading
 		},
 		data () {
 			return {
 				newsList: [],
-				onData: false,
-				onFetching: false,
-				showUp: true,
-				load: '<load-more tip="数据加载中"></load-more>',
-				pulldown: {
-					downContent: '<img src="./static/images/loading.gif" width="30" height="30">',
-					upContent: '<img src="./static/images/loading.gif" width="30" height="30">',
-					loadingContent: '<img src="./static/images/loading.gif" width="30" height="30">',
-				},
-				scrollerStatus: { 
-					pullupStatus: 'default'
-				},
 				functionButtons: [{ title: '每日礼包', imgName: 'btn_1' }, 
-				// { title: '邀请有礼', imgName: 'btn_2' }, 
+				{ title: '邀请有礼', imgName: 'btn_2' }, 
 				{ title: '新手福利', imgName: 'btn_3' }, 
 				// { title: '活动', imgName: 'btn_4', link: '/News' }, 
 				{ title: '游戏指引', imgName: 'btn_4', link: '/News' }, 
 				// { title: '玩家秀', imgName: 'btn_5', link: '/GamePlayerShow' }
 				],
-				coins: {},
 				search: {
 					start: 0,
 					limit: 10,
@@ -123,7 +132,6 @@
 				main: null,
 				hdWidth: 0,
 				swiperIndex: 0,
-				// channelsTypeList: [{name: '全部', id: ''}],
 				channelsTypeList: [],
 				id: null,
 				header: null,
@@ -131,10 +139,12 @@
 				isHidden: false,
 				scrollTop: 0,
 				isScrollTop: false,
+				enabled: false,
 			}
 		},
 
 		mounted() {
+			this.shareInvitationReward()
 			window.addEventListener('scroll', () => {
 				setTimeout(() => {
 					this.setScroll()
@@ -151,13 +161,13 @@
 				this.hdWidth = window.innerWidth * 4
 			}
 
+			this.from()
+
 			let share = this.getItem('share')
 			if (share) {
 				this.isInvitingFriends = true
-				// this.$refs.inviting.create()
 			}
-      this.from()
-
+      
 			let start = Number(this.getItem('start'))
 			if (start) this.search.start = start
 
@@ -258,30 +268,21 @@
 						this.closeReceive()
 					}
 				}
-					
 			},
 
-			show (item, val) {
-				// if (item.href) {
-				// 	window.location.href = 'http://mp.weixin.qq.com/s/M_zw6LbU_UU4RRcKta1LaA'
-				// 	return false
-				// }
-				if (item.link) {
-					this.$router.push(item.link)
-				} else {
-					switch (val) {
-						case 0:
-							this.isHidden = true
-							this.isDailyGiftBag = !this.isDailyGiftBag
-							break
-						// case 1:
-						// 	this.isInvitingFriends = !this.isInvitingFriends
-						// 	break
-						case 1:
-							this.isHidden = true
-							this.isLoginBonus = true
-							break
-					}
+			show (val) {
+				switch (val) {
+					case 0:
+						this.isHidden = true
+						this.isDailyGiftBag = !this.isDailyGiftBag
+						break
+					case 1:
+						this.isInvitingFriends = !this.isInvitingFriends
+						break
+					case 2:
+						this.isHidden = true
+						this.isLoginBonus = true
+						break
 				}
 			},
 			getMasks (val) {
@@ -399,6 +400,14 @@
 					}
 				}
 			},
+
+			shareInvitationReward () {
+				api.shareInvitationReward().then(res => {
+					if (res.data.errCode === 0) {
+						this.enabled = res.data.result.enabled
+					}
+				})
+			}
 		}
 	}
 </script>
