@@ -2,7 +2,7 @@
 	<div class="gra">
 		<div class="img" id="img-box">
 			<img :src="img + item.previewImage" alt="">
-			<!-- <img class="img-left" src="http://wawa-1255600302.file.myqcloud.com/images/new.png" alt=""> -->
+			<img class="img-left" v-if="item.beNew" src="http://wawa-1255600302.file.myqcloud.com/images/new.png" alt="">
 			<!-- <img class="img-right" src="http://wawa-1255600302.file.myqcloud.com/images/new.png" alt=""> -->
 		</div>
 		<div class="text">

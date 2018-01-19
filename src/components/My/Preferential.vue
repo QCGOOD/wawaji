@@ -65,7 +65,6 @@
       show (description) {
         this.description = description
         this.visibile = true
-        console.log(description)
       },
       close () {
         this.visibile = false

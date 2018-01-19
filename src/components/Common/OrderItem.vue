@@ -6,18 +6,23 @@
     </div>
     <div class="dolls-list">
       <div class="dolls-item" v-for="(doll, i) in item.items" :key="i">
-        <div class="d-img">
-          <!-- <img src="static/images/headImg.jpg" alt=""> -->
-          <img :src="img + doll.previewImage" alt="">
+        <div class="dolls-detail">
+          <div class="d-img">
+            <img :src="img + doll.previewImage" alt="">
+          </div>
+          <div class="dolls-text">
+            <p>{{doll.name}}</p>
+          </div>
         </div>
-        <div class="dolls-text">
-          <p>{{doll.name}}</p>
+        <div class="dolls-wuliu">
+          <p>物流编号：{{doll.transportNumber}}</p>
+          <p>物流公司：{{doll.transportCompany}}</p>
         </div>
       </div>
     </div>
     <div class="address-info" v-if="item.status === 3">
-      <p>物流编号：{{item.transportNumber}}</p>
-      <p>物流公司：{{item.transportCompany}}</p>
+      <!-- <p>物流编号：{{item.transportNumber}}</p>
+      <p>物流公司：{{item.transportCompany}}</p> -->
       <p v-if="item.transportAmount">运费：{{item.transportAmount | price}}元</p>
       <p>收件人：{{item.receiverAppellation}} </p>
       <p>{{item.receiverAddress}}</p>
@@ -108,24 +113,33 @@
     .dolls-list {
       padding-top: 1.5rem;
       .dolls-item {
-        display: flex;
         padding-bottom: 1.5rem;
-        .d-img {
-          flex-shrink: 0;
-          margin-right: 10px;
-          width: 4rem;
-          height: 4rem;
-          line-height: 1;
-          overflow: hidden;
-          box-sizing: border-box;
-          border-radius: 5px;
-          img {
-            width: 100%;
+        .dolls-detail {
+          display: flex;
+          padding-bottom: 1rem;
+          .d-img {
+            flex-shrink: 0;
+            margin-right: 10px;
+            width: 4rem;
+            height: 4rem;
+            line-height: 1;
+            overflow: hidden;
+            box-sizing: border-box;
+            border-radius: 5px;
+            img {
+              width: 100%;
+            }
           }
-        }
-        .dolls-text {
-          color: #333;
-          font-size: 1.5rem;
+          .dolls-text {
+            color: #333;
+            font-size: 1.5rem;
+          }
+        } 
+        .dolls-wuliu {
+          background: #eaeaea9c;
+          border-radius: 5px;
+          font-size: 1.4rem;
+          padding: .5rem 1rem;
         }
       }
     }

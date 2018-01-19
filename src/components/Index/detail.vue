@@ -325,6 +325,7 @@
 				isPay: false,
 				isCreateGrabDoll: 0,
 				soundConfig: {},
+				isSend: 0,
 			}
 		},
 		created () {
@@ -643,6 +644,7 @@
 				this.playAgainCountDown = 10
 				this.isSuccess = status
 				if (status) {
+
 					this.$refs.chatInput.success(this.member.nickname, this.doll.name)
 					this.updateAgainStatus(true)
 				} else {
@@ -1422,6 +1424,7 @@
 
 			// 收到本次抓娃娃的结果
 			operateResultHandler (custom_content) {
+
 				this.isPay = false
 				console.log('收到本次抓娃娃的结果')
 				
@@ -1433,7 +1436,8 @@
 					return
 				}
 				if (custom_content.data.result === 1) {
-					this.closeSuccess(true)
+					this.isSend++
+					if (this.isSend === 1) this.closeSuccess(true)
 					console.log('收到本次抓娃娃的结果，成功')
 
 					this.isCreateGrabDoll++
@@ -1441,8 +1445,9 @@
 						this.createGrabDoll(true)
 					}
 				} else {
+					// this.isSend++
+					// if (this.isSend === 1) this.closeSuccess(true)
 					this.closeFail(true)
-					// this.closeSuccess(true)
 					console.log('收到本次抓娃娃的结果，失败')
 
 					this.isCreateGrabDoll++
@@ -1450,20 +1455,6 @@
 						this.createGrabDoll(false)
 					}
 				}
-				// 初始化设置
-				// this.order = 0
-				// this.isGame = false
-				// this.gameEnd = false
-				// this.countNum = 30
-				// // this.dollCatchId = ''
-				// this.clearMember()
-
-				// var replyData = { time_stamp: new Date().getTime(), continue: 1 } // 插队
-				// // var replyData = { time_stamp: new Date().getTime(), continue: 0 }
-				// this.sendCustomCMD(++this.clientSeq, 517, replyData)
-				// this.isInitApply = false
-				// // 发送继续玩指令
-				// this.playAgainHandler()
 			},
 			// 发送抓取结果
 			createGrabDoll (status) {
@@ -1484,7 +1475,7 @@
 				this.isGame = false
 				this.gameEnd = false
 				this.countNum = 30
-				// this.dollCatchId = ''
+				this.isSend = 0
 				this.clearMember()
 
 				var replyData = { time_stamp: new Date().getTime(), continue: 1 } // 插队

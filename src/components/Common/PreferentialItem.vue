@@ -5,14 +5,16 @@
         <!-- <img src="http://wawa-1255600302.file.myqcloud.com/images/lihe.png" alt=""> -->
         <img :src="img + item.previewImage" alt="">
         <div class="item-text">
-          <p class="title"><span class="price">￥{{item.price | price}}</span>买就送5金币</p>
+          <p class="title">{{item.name}}— <span class="price">￥{{item.price | price}}</span></p>
+          <p class="coin">买{{item.coinNum}}送{{item.giftCoinNum}}金币<span class="bag" @click="show">礼包说明</span></p>
           <div class="type">
-            <span class="time" v-if="item.timeLimitType === 1">永久</span>
-            <span class="time" v-if="item.timeLimitType === 2">有效期：1月31日 10:00 至 1月31日 10:00</span>
-            <span class="time" v-if="item.timeLimitType === 3">每天{{item.buyLimit}}次</span>
-            <span class="time" v-if="item.timeLimitType === 4">每周{{item.buyLimit}}次</span>
-            <span class="time" v-if="item.timeLimitType === 5">每月{{item.buyLimit}}次</span>
-            <span class="bag" @click="show">礼包说明</span>
+            <i class="iconfont icon-icon-test"></i>
+            <span class="time" v-if="item.timeLimitType === 1">永久 (限{{item.buyLimit}}次)</span>
+            <span class="time" v-if="item.timeLimitType === 2">有效期：1月31日 10:00 至 1月31日 10:00 (限{{item.buyLimit}}次)</span>
+            <span class="time" v-if="item.timeLimitType === 3">每天 (限{{item.buyLimit}}次)</span>
+            <span class="time" v-if="item.timeLimitType === 4">每周 (限{{item.buyLimit}}次)</span>
+            <span class="time" v-if="item.timeLimitType === 5">每月 (限{{item.buyLimit}}次)</span>
+            
           </div>
         </div>
       </div>
@@ -73,6 +75,7 @@
         height: 5rem;
         flex-shrink: 0;
         margin-right: 1rem;
+        border-radius: 5px;
       }
       .item-text {
         .title {
@@ -84,14 +87,21 @@
             margin-right: .3rem;
           }
         }
-        .type {
-          margin-top: .3rem;
-          font-size: 1.3rem;
-          color: #c8acd7;
+        .coin {
+          font-size: 1.5rem;
+          color: #fff;
           .bag {
             color: #ffec73;
             text-decoration: underline;
             margin-left: 1rem;
+          }
+        } 
+        .type {
+          margin-top: .3rem;
+          font-size: 1.3rem;
+          color: #c8acd7;
+          .icon-icon-test {
+            font-size: 1.3rem;
           }
         }
       }

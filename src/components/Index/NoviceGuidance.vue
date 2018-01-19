@@ -35,7 +35,7 @@
     </div>
 
     <div class="second" v-if="liveBox">
-      <img class="nb-bk" src="http://wawa-1255600302.file.myqcloud.com/images/ng-bk.png" alt="">
+      <img class="nb-bk" :style="{height: `${bgHeight}px`}" src="http://wawa-1255600302.file.myqcloud.com/images/ng-bk.png" alt="">
       <div class="ng-right">
         <img src="http://wawa-1255600302.file.myqcloud.com/images/ng-zq.png" alt="">
         <img src="http://wawa-1255600302.file.myqcloud.com/images/ng-xq.png" alt="">
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+  import api from '../../api/api'
+
   export default {
     props: {
       visibile: Boolean,
@@ -74,6 +76,7 @@
         popupContext: true,
         popupText: true,
         knowIndex: 0,
+        bgHeight: 0,
       }
     },
     mounted () {
@@ -93,6 +96,7 @@
       getNgBox () {
         let ngBox = document.getElementById('ng-box')
         this.width = this.height = window.innerWidth * 0.7
+        this.bgHeight = window.innerHeight - 180
       },
       from () {
         let noviceGuidance = localStorage.getItem('from') 
@@ -113,14 +117,21 @@
         this.$router.replace('/index')
       },
 
+      openNoviceGuidiance () {
+        api.openNoviceGuidiance({openNoviceGuidance: false}).then(res => {
+
+        })
+      },
+
       know (val) {
-        // alert(val)
+        
         if (typeof (val) === 'number') {
           switch (val) {
             case 0:
               this.popupBox = false
               this.liveBox = true
               this.knowIndex = 1
+              this.openNoviceGuidiance()
               break
             case 1: 
               this.liveBox = false
@@ -140,6 +151,7 @@
             this.popupBox = false
             this.liveBox = true
             this.knowIndex = 1
+            this.openNoviceGuidiance()
           } else if (this.knowIndex === 1) {
             console.log(11111111)
             this.liveBox = false
@@ -274,10 +286,11 @@
     }
     .second {
       position: relative;
+      padding: 10px;
       // display: none;
       .nb-bk {
-        width: 96%;
-        padding: 2%;
+        width: 100%;
+        // padding: 2%;
       }
       .ng-right {
         position: absolute;

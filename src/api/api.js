@@ -450,4 +450,9 @@ export default {
 	getGameAudio () {
 		return getData('/common/game_audio/config')
 	},
+
+	// 开启或关闭新手引导
+	openNoviceGuidiance (status) {
+		return putData('/member/config/open_novice_guidiance', status)
+	},
 }

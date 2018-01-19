@@ -11,9 +11,9 @@
         </p>
       </router-link>
       <div class="function">
-				<router-link tag="i" class="img" :to="{path: '/myInfo/Preferential'}">
+				<!-- <router-link tag="i" class="img" :to="{path: '/myInfo/Preferential'}">
           <img class="lihe" src="http://wawa-1255600302.file.myqcloud.com/images/lihe.png" alt="">
-        </router-link>
+        </router-link> -->
         <router-link tag="i" class="img" :to="{path: '/myInfo/recharge'}">
           <img src="http://wawa-1255600302.file.myqcloud.com/images/pay1.png" alt="">
         </router-link>

@@ -2,7 +2,7 @@
   <div id="orders" :style="{height: dlHeight + 'px'}">
 		<!-- <x-header title="我的订单"></x-header> -->
 		<x-header title="我的订单" :left-options="{preventGoBack: true}" @on-click-back="back" v-if="isTemplateMsg"></x-header>
-		<x-header title="我的订单"v-else></x-header>
+		<x-header title="我的订单" v-else></x-header>
     <scroller height="-46" v-model="scrollerStatus" scrollbar-y lock-x ref="scroller" :scroll-bottom-offset="150" :pulldown-config="pulldown" :use-pulldown='isPulldown'  @on-pulldown-loading="dollOrdersList(true)" 
 		@on-scroll-bottom="dollOrdersList()">
       <div v-if="newsList.length > 0">
