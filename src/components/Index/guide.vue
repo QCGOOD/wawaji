@@ -4,9 +4,9 @@
       <img src="http://wawa-1255600302.file.myqcloud.com/images/meibi.png" alt="">
     </div>
     <div class="btn-box">
-      <div class="b-btn" @click.stop="share">
+      <!-- <div class="b-btn" @click.stop="share">
         <p>去领币</p>
-      </div>
+      </div> -->
       <div class="b-btn" @click.stop="recharge">
         <p>去充值</p>
       </div>
@@ -82,8 +82,8 @@
         color: #fff;
         font-size: 1.6rem;
         &:first-child {
-          background: #f62371;
-          margin-right: 5rem;
+          // background: #f62371;
+          // margin-right: 5rem;
         }
       }
     }

@@ -163,10 +163,10 @@
 
 			this.from()
 
-			let share = this.getItem('share')
-			if (share) {
-				this.isInvitingFriends = true
-			}
+			// let share = this.getItem('share')
+			// if (share) {
+			// 	this.isInvitingFriends = true
+			// }
       
 			let start = Number(this.getItem('start'))
 			if (start) this.search.start = start

@@ -848,7 +848,7 @@
 					this.getGameInfo()
 					// this.confirmTocancel(true)
 				}, err => {
-					// console.log('失败', err)
+					console.log('失败', err)
 					console.log(zg)
 					this.isStream = false
 				})
