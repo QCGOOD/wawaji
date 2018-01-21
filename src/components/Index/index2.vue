@@ -132,7 +132,8 @@
 				main: null,
 				hdWidth: 0,
 				swiperIndex: 0,
-				channelsTypeList: [],
+				// channelsTypeList: [],
+				channelsTypeList: [{name: '全部', id: ''}],
 				id: null,
 				header: null,
 				tabs: null,
@@ -370,6 +371,7 @@
 				}
 
 				api.channelsV1(this.search).then(res => {
+					console.log(new Date())
 					if (res.data.errCode === 0) {
 						console.log(res.data)
             this.total = res.data.count
