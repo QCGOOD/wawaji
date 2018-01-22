@@ -9,7 +9,7 @@
       <div class="first-box" v-if="popupContext">
         <div class="text">
           <p>我们精心为您准备了</p>
-          <p><span style="color: #f7c5d1;">超多萌娃</span>和<span style="color: #ffde00;">39金币</span></p>
+          <p><span style="color: #f7c5d1;">超多萌娃</span>和<span style="color: #ffde00;">{{sum}}金币</span></p>
           <p>快来抓娃娃吧 (*≧m≦*)</p>
         </div>
         <img class="dengdao" src="http://wawa-1255600302.file.myqcloud.com/images/dengdao.png" alt="">
@@ -65,6 +65,7 @@
   export default {
     props: {
       visibile: Boolean,
+      sum: Number,
     },
     data () {
       return {
@@ -107,7 +108,6 @@
             localStorage.setItem('from', from)
           }
         }
-        // this.$emit('close', true) 
       },
       get () {
         window.location.href = 'http://mp.weixin.qq.com/s/rEV9658Pa5x_RelU_U4J4Q'

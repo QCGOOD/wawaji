@@ -15,7 +15,7 @@ let urlsk = {
 		// return `http://wfx.wego168.com/${this.code}/`
 		// return `http://192.168.1.70:8180/${this.code}/`
 		// return `http://192.168.1.90:8180/${this.code}/`
-		// return `http://192.168.1.73:8180/${this.code}/`
+		// return `http://192.168.1.98:8180/${this.code}/`
 	},
 
 	// 类型：首页，新闻列表，新闻详情，活动列表，活动详情，个人中心

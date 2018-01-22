@@ -432,7 +432,7 @@
 			// padding: 0 1.5rem;
 			display: flex;
 			justify-content: space-between;
-			height: 5rem;
+			height: 45px;
 			align-items: center;
 			position: fixed;
 			width: 100%;

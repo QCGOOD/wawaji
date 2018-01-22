@@ -175,7 +175,7 @@
 		<!-- vip提示 -->
 		<vip-guide :visibile="isVipGuide" @close="closeVipGuide"></vip-guide>
 		<!-- 新手引导 -->
-		<novice-guidance :visibile="isNoviceGuidance" @close="closeNoviceGuidance"></novice-guidance>
+		<novice-guidance :visibile="isNoviceGuidance" :sum="sum" @close="closeNoviceGuidance"></novice-guidance>
 	</div>
 </template>
 
