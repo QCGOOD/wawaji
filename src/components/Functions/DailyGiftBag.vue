@@ -2,10 +2,11 @@
   <div class="daily-gift" v-show="show">
     <div class="daily-gift-box">
       <div class="img" id="simg">
-        <div class="sguanbi" @click="close">
+        <!-- <div class="sguanbi" @click="close">
           <i class="iconfont icon-guanbi1"></i>
-        </div>
-        <img src="http://wawa-1255600302.file.myqcloud.com/images/mr.png" alt="">
+        </div> -->
+        <i class="transparent-close" @click="close"></i>
+        <img src="http://wawa-1255600302.file.myqcloud.com/images/meirilibao.png" alt="">
         
       </div>
       <div class="mask" id="maskBox">
@@ -89,22 +90,32 @@
             font-size: 28px;
           }
         }
-        width: 125%;
+        width: 110%;
         position: relative;
         left: 50%;
         transform: translate(-50%, 0);
         line-height: 0;
-        margin-bottom: -30px;
+        margin-bottom: -3.9rem;
         z-index: 1;
+        .transparent-close {
+          width: 3.5rem;
+          height: 3.5rem;
+          display: block;
+          position: absolute;
+          right: 0;
+          border-radius: 50%;
+          top: 50%;
+          transform: translate(0, -50%);
+        }
         img {
           width: 100%;
         }
       }
       .mask {
         width: 100%;
-        background: rgba(255, 255, 255, .5);
+        background: rgba(255, 255, 255, .8);
         border-radius: 10px;
-        padding: 10px;
+        padding: 1rem;
         box-sizing: border-box;
         .daily-gift-text {
           text-align: center;

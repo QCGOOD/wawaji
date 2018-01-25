@@ -2,10 +2,11 @@
   <div class="records" v-show="show">
     <div class="records-box">
       <div class="img" id="simg">
-        <div class="sguanbi" @click="close">
+        <!-- <div class="sguanbi" @click="close">
           <i class="iconfont icon-guanbi1"></i>
-        </div>
-        <img src="http://wawa-1255600302.file.myqcloud.com/images/record1.png" alt="">
+        </div> -->
+        <i class="transparent-close" @click="close"></i>
+        <img src="http://wawa-1255600302.file.myqcloud.com/images/zhuazhong.png" alt="">
       </div>
       <div class="mask" id="maskBox">
         <div class="records-text">
@@ -116,13 +117,23 @@
             font-size: 28px;
           }
         }
-        width: 125%;
+        width: 110%;
         position: relative;
         left: 50%;
         transform: translate(-50%, 0);
         line-height: 0;
-        margin-bottom: -3rem;
+        margin-bottom: -3.9rem;
         z-index: 1;
+        .transparent-close {
+          width: 3.5rem;
+          height: 3.5rem;
+          display: block;
+          position: absolute;
+          right: 0;
+          border-radius: 50%;
+          top: 50%;
+          transform: translate(0, -50%);
+        }
         img {
           width: 100%;
         }
@@ -137,7 +148,7 @@
           background: #fff;
           border-radius: 10px;
           position: relative;
-          padding: 3.5rem 1.5rem 0 1.5rem;
+          padding: 3rem 1.5rem .5rem 1.5rem;
           .context {
             height: 40rem;
             overflow-y: scroll;

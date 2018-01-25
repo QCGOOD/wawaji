@@ -103,7 +103,7 @@
 					count: 0
         },
         height: 0,
-        selectIndex: 1,
+        selectIndex: 3,
         item: {},
       }
     },

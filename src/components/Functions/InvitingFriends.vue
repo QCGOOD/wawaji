@@ -2,16 +2,21 @@
   <div class="inviting" v-show="show">
     <div class="inviting-box">
       <div class="img" id="simg">
-        <div class="sguanbi" @click="close">
+        <!-- <div class="sguanbi" @click="close">
           <i class="iconfont icon-guanbi1"></i>
-        </div>
-        <img src="http://wawa-1255600302.file.myqcloud.com/images/yq.png" alt="">
+        </div> -->
+        <i class="transparent-close" @click="close"></i>
+        <img src="http://wawa-1255600302.file.myqcloud.com/images/yaoqing2.png" alt="">
       </div>
       <div class="mask" id="maskBox">
         
         <div class="inviting-text" v-if="share.length > 0">
           <div class="title">
-            <p class="you-btn" @click="showInvting">邀请好友</p>
+            <p class="you-btn" @click="showInvting">
+              <i class="big-circle"></i>
+              <i class="small-circle"></i>
+              邀请好友
+            </p>
           </div>
           <div class="context">
             <div class="item" v-for="(item, i) in share" :key="i">
@@ -26,14 +31,13 @@
                 </div>
               </div>
               <div class="item-r">
-                <!-- <p class="r-count">当前：
-                  <span v-if="item.number > 0">{{invitationNum}}</span>
-                  <span v-else>{{item.number}}</span>
-                  /
-                  <span>{{item.number}}</span>
-                </p> -->
-                <p class="receive" v-if="item.status === 0" @click="showInvting">邀请</p>
-                <p class="receive have-receive" v-else-if="item.status === 1" @click="receive(item)">领取</p>
+                <!-- <p class="receive" v-if="item.status === 0" @click="showInvting">邀请</p> -->
+                <div class="receive-n" v-if="item.status === 1" @click="receive(item)">
+                  <i class="big-circle"></i>
+                  <i class="small-circle"></i>
+                  领取
+                </div>
+                <!-- <p class="receive have-receive" v-if="item.status === 1" @click="receive(item)">领取</p> -->
                 <i class="iconfont icon-dui" v-else-if="item.status === 2"></i>
               </div>
             </div>
@@ -47,7 +51,11 @@
           <div class="none-text">
             <p>各位玩友，邀请好友即可得金币哦（好友进入游戏后，抓取一次娃娃即算邀请成功），分享多多，金币多多哦~</p>
           </div>
-          <p class="none-btn" @click="showInvting">我要分享</p>
+          <p class="none-btn" @click="showInvting">
+            <i class="big-circle"></i>
+              <i class="small-circle"></i>
+            我要分享
+          </p>
         </div>
       </div>
       <div class="inviting-mask">
@@ -88,7 +96,7 @@
     },
     mounted () {
       // this.shareInvitationReward()
-      this.shareInvitationRewardSelect()
+      // this.shareInvitationRewardSelect()
     },
     methods: {
       ...mapActions([
@@ -215,19 +223,29 @@
             font-size: 28px;
           }
         }
-        width: 125%;
+        width: 110%;
         position: relative;
         left: 50%;
         transform: translate(-50%, 0);
         line-height: 0;
-        margin-bottom: -3rem;
+        margin-bottom: -3.9rem;
         z-index: 1;
+        .transparent-close {
+          width: 3.5rem;
+          height: 3.5rem;
+          display: block;
+          position: absolute;
+          right: 0;
+          border-radius: 50%;
+          top: 50%;
+          transform: translate(0, -50%);
+        }
         img {
           width: 100%;
         }
       }
       .mask {
-        background: rgba(255, 255, 255, .5);
+        background: rgba(255, 255, 255, .8);
         border-radius: 10px;
         padding: 1rem;
         box-sizing: border-box;
@@ -245,16 +263,44 @@
           }
           .none-btn {
             margin-top: 3rem;
-            .bgLinearGradient(@top: #fe2d87; @bottom: #f22065;);
+            // .bgLinearGradient(@top: #fe2d87; @bottom: #f22065;);
+            // width: 14rem;
+            // height: 4rem;
+            // line-height: 4rem;
+            // text-align: center;
+            // color: #fff;
+            // font-size: 1.8rem;
+            // border-radius: 40px;
+            // border: 1px solid #ff3e94;
+            // .boxShadowOutset(@x: 0px; @y: 2px; @blur: 0px; @spread: 0px; @color: #790029;);
+            .bgLinearGradient(@top: #ff4d99; @bottom: #f42168;);
+            .borderRadius(10px);
+            .boxShadowOutset(@x: 0; @y: .7rem; @blur: 0; @spread: 0; @color: #c10846;);
             width: 14rem;
-            height: 4rem;
-            line-height: 4rem;
+            height: 5rem;
+            line-height: 5rem;
+            font-size: 2rem;
             text-align: center;
             color: #fff;
-            font-size: 1.8rem;
-            border-radius: 40px;
-            border: 1px solid #ff3e94;
-            .boxShadowOutset(@x: 0px; @y: 2px; @blur: 0px; @spread: 0px; @color: #790029;);
+            position: relative;
+            .big-circle {
+              width: 1.3rem;
+              height: 1.3rem;
+              background: rgba(255, 255, 255, 0.5);
+              position: absolute;
+              left: .5rem;
+              top: .6rem;
+              border-radius: 50%;
+            }
+            .small-circle {
+              width: .9rem;
+              height: .9rem;
+              background: rgba(255, 255, 255, 0.5);
+              position: absolute;
+              left: 2.2rem;
+              top: .4rem;
+              border-radius: 50%;
+            }
           }
         }
         .inviting-text {
@@ -263,27 +309,55 @@
           // height: 100%;
           border-radius: 10px;
           position: relative;
-          padding: 3.5rem 1.5rem 0 1.5rem;
+          padding: 3rem 1.5rem 0 1.5rem;
           .title {
             // background: #f6a0b5;
             border-radius: 5px;
             color: #fff;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             padding: .5rem 1rem;
             display: flex;
             justify-content: center;
             align-items: center;
             .you-btn {
-              .bgLinearGradient(@top: #fe2d87; @bottom: #f22065;);
+              // .bgLinearGradient(@top: #fe2d87; @bottom: #f22065;);
+              // width: 14rem;
+              // height: 4rem;
+              // line-height: 4rem;
+              // text-align: center;
+              // color: #fff;
+              // font-size: 1.8rem;
+              // border-radius: 40px;
+              // border: 1px solid #ff3e94;
+              // .boxShadowOutset(@x: 0px; @y: 2px; @blur: 0px; @spread: 0px; @color: #790029;);
+              .bgLinearGradient(@top: #ff4d99; @bottom: #f42168;);
+              .borderRadius(10px);
+              .boxShadowOutset(@x: 0; @y: .7rem; @blur: 0; @spread: 0; @color: #c10846;);
               width: 14rem;
-              height: 4rem;
-              line-height: 4rem;
+              height: 5rem;
+              line-height: 5rem;
+              font-size: 2rem;
               text-align: center;
               color: #fff;
-              font-size: 1.8rem;
-              border-radius: 40px;
-              border: 1px solid #ff3e94;
-              .boxShadowOutset(@x: 0px; @y: 2px; @blur: 0px; @spread: 0px; @color: #790029;);
+              position: relative;
+              .big-circle {
+                width: 1.3rem;
+                height: 1.3rem;
+                background: rgba(255, 255, 255, 0.5);
+                position: absolute;
+                left: .5rem;
+                top: .6rem;
+                border-radius: 50%;
+              }
+              .small-circle {
+                width: .9rem;
+                height: .9rem;
+                background: rgba(255, 255, 255, 0.5);
+                position: absolute;
+                left: 2.2rem;
+                top: .4rem;
+                border-radius: 50%;
+              }
             }
             .left {
               text-align: left;
@@ -390,6 +464,36 @@
                   border: 1px solid #9eee00;
                   .boxShadowOutset(@x: 0; @y: 2px; @blur: 0px; @spread: 0px; @color: #417a00);
                 }
+                .receive-n {
+                  .bgLinearGradient(@top: #9ce000; @bottom: #48a801;);
+                  .borderRadius(.9rem);
+                  .boxShadowOutset(@x: 0; @y: .4rem; @blur: 0; @spread: 0; @color: #478a0e;);
+                  width: 6rem;
+                  height: 3.2rem;
+                  line-height: 3.4rem;
+                  font-size: 1.5rem;
+                  text-align: center;
+                  color: #fff;
+                  position: relative;
+                  .big-circle {
+                    width: .7rem;
+                    height: .7rem;
+                    background: rgba(255, 255, 255, 0.5);
+                    position: absolute;
+                    left: .4rem;
+                    top: .5rem;
+                    border-radius: 50%;
+                  }
+                  .small-circle {
+                    width: .5rem;
+                    height: .5rem;
+                    background: rgba(255, 255, 255, 0.5);
+                    position: absolute;
+                    left: 1.4rem;
+                    top: .3rem;
+                    border-radius: 50%;
+                  }
+                }
                 .icon-dui {
                   color: #60b700;
                   font-size: 2.6rem;
@@ -401,7 +505,7 @@
           }
           .shouming {
             color: #999999;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             padding: 1rem 0 1rem 0;
             text-align: left;
           }

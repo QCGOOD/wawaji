@@ -2,10 +2,11 @@
   <div class="xinshou" v-show="show">
     <div class="xinshou-box">
       <div class="img" id="simg">
-        <div class="sguanbi" @click="close">
+        <!-- <div class="sguanbi" @click="close">
           <i class="iconfont icon-guanbi1"></i>
-        </div>
-        <img src="http://wawa-1255600302.file.myqcloud.com/images/xinshou1.png" alt="">
+        </div> -->
+        <i class="transparent-close" @click="close"></i>
+        <img src="http://wawa-1255600302.file.myqcloud.com/images/xinshou2.png" alt="">
       </div>
       <div class="mask" id="maskBox">
         <div class="xinshou-text">
@@ -17,8 +18,13 @@
             </div>
           </div>
           <div class="xinshou-btn">
-            <div class="again" @click="close">
+            <!-- <div class="again" @click="close">
               <p>确定</p>
+            </div> -->
+            <div class="public-button" @click="close">
+              <i class="big-circle"></i>
+              <i class="small-circle"></i>
+              确定
             </div>
           </div>
           <div class="shouming">
@@ -117,22 +123,34 @@
             font-size: 28px;
           }
         }
-        width: 125%;
+        // width: 125%;
+        width: 110%;
         position: relative;
         left: 50%;
         transform: translate(-50%, 0);
         line-height: 0;
-        margin-bottom: -30px;
+        margin-bottom: -3.9rem;
         z-index: 1;
+        .transparent-close {
+          width: 3.5rem;
+          height: 3.5rem;
+          display: block;
+          position: absolute;
+          right: 0;
+          border-radius: 50%;
+          top: 50%;
+          transform: translate(0, -50%);
+        }
         img {
           width: 100%;
         }
       }
       .mask {
         width: 100%;
-        background: rgba(255, 255, 255, .5);
+        background: rgba(255, 255, 255, .8);
         border-radius: 10px;
-        padding: 10px;
+        // padding: 10px;
+        padding: 1rem;
         box-sizing: border-box;
         .xinshou-text {
           text-align: center;
@@ -198,6 +216,36 @@
                 text-align: center;
                 color: #fff;
                 text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+              }
+            }
+            .public-button {
+              .bgLinearGradient(@top: #9ce000; @bottom: #48a801;);
+              .borderRadius(10px);
+              .boxShadowOutset(@x: 0; @y: .5rem; @blur: 0; @spread: 0; @color: #478a0e;);
+              width: 9rem;
+              height: 4rem;
+              line-height: 4rem;
+              font-size: 2rem;
+              text-align: center;
+              color: #fff;
+              position: relative;
+              .big-circle {
+                width: .9rem;
+                height: .9rem;
+                background: rgba(255, 255, 255, 0.5);
+                position: absolute;
+                left: .4rem;
+                top: .5rem;
+                border-radius: 50%;
+              }
+              .small-circle {
+                width: .6rem;
+                height: .6rem;
+                background: rgba(255, 255, 255, 0.5);
+                position: absolute;
+                left: 1.8rem;
+                top: .4rem;
+                border-radius: 50%;
               }
             }
           }

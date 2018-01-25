@@ -482,10 +482,10 @@
 		// 组件销毁，退出时执行
 		beforeDestroy() {
 			if (this.againStatus === 'true') this.confirmTocancel(true)
-			if (this.useLocalStreamList.length > 0) {
-				zg.stopPlayingStream(this.useLocalStreamList[1].stream_id)
-				zg.stopPlayingStream(this.useLocalStreamList[0].stream_id)
-			}
+			// if (this.useLocalStreamList.length > 0) {
+			// 	zg.stopPlayingStream(this.useLocalStreamList[1].stream_id)
+			// 	zg.stopPlayingStream(this.useLocalStreamList[0].stream_id)
+			// }
 			zg.release()
 			zg.logout()
 			console.log("登出房间")
